@@ -1,47 +1,41 @@
-# Unity UI Test Automation Framework
+＃Unity UI测试自动化框架
 
-# Features
+＃ 特征
 
-* Allows to write automated tests that drive the game in a way similar to how a user would
-* Integrated with Unity UI solution, can easily be integrated with custom solutions like NGUI or EZGUI
-* Tests can be executed in Editor or Unity Player (tested Android, iOS and Standalone)
-* Test reports in Editor GUI, Console and XML files (JUnit format)
-* Includes lightweight dependency injection framework for object mocking
-
-
-# Running
-
-* To run tests in Editor open scene Assets/UITest/Example/TestRunner.unit and click Play
-* Click TestRunner GameObject to see the test report in realtime
-* Use filter field to run tests partially
-* To run on device just set Tests scene as a first one before building
+*允许以类似于用户的方式编写驱动游戏的自动化测试
+*集成与Unity UI解决方案，可以轻松地与自定义解决方案，如NGUI或EZGUI集成
+*测试可以在编辑器或Unity播放器（测试Android，iOS和独立）
+*编辑器中的测试报告GUI，控制台和XML文件（JUnit格式）
+*包括用于对象嘲笑的轻量级依赖注入框架
 
 
-# Implementing tests
+＃Running
 
-* To add a new test create a new class anywhere in the project extending UITest
-* Use UITest, UISetUp and UITearDown attributes same way as you would in Unit tests
-* Checkout example in Assets/UITest/Examples/UITestExample.cs
-
-
-# API
-
-API is designed to be readable as a natural language so it can be understood by non technical people too. All API calls are designed to wait until its function could be executed with a certain timeout.
-
-* `Press(<GameObjectName>)` - Simulates a button press. If an object with a given name is not found in the scene, it waits for it to appear.
-* `LoadScene(<SceneName>)` - Load new scene and wait until scene is fully loaded.
-* `AssertLabel(<GameObjectName>, <Text>)` - Asserts text value, waits until value is changed.
-* `WaitFor(<Condition>)` - Generic method to wait until given condition is satisfied.
-* `WaitFor(new LabelTextAppeared(<GameObjectName>, <Text>))` - Wait for label with given text to appear
-* `WaitFor(new SceneLoaded(<SceneName>))` - Wait until scene is fully loaded
-* `WaitFor(new ObjectAppeared(<GameObjectName>))` - Wait for object with given name to appear
-* `WaitFor(new ObjectAppeared<ObjectType>())` - Wait for object with component of given type to appear
-* `WaitFor(new ObjectDisappeared(<GameObjectName>))` - Wait for object with given name to disappear
-* `WaitFor(new ObjectDisappeared<ObjectType>())` - Wait for object with component of given type to disappear
-* `WaitFor(new BoolCondition(<BoolFunction>))` - Generic condition is satisfied when a given bool expression becomes true
+*要在编辑器中打开场景Assets / UITest / Example / TestRunner.unit运行测试，然后单击播放
+*单击TestRunner GameObject以实时查看测试报告
+*使用过滤器字段部分运行测试
+*要运行在设备上只是设置测试场景作为第一个建设
 
 
-Have fun testing ;)
+＃实现测试
 
-Filipp Keks
+*要添加一个新测试，在项目扩展UITest的任何地方创建一个新类
+*使用与在单元测试中相同的方式使用UITest，UISetUp和UITearDown属性
+*在Assets / UITest / Examples / UITestExample.cs中的Checkout示例
 
+
+＃API
+
+API被设计为可读的自然语言，所以它也可以被非技术人员理解。所有API调用都设计为等待其函数可以在一定的超时时间内执行。
+
+*`按（<GameObjectName>）` - 模拟按钮按。如果在场景中找不到具有给定名称的对象，它会等待它出现。
+*`LoadScene（<SceneName>）` - 加载新场景并等待直到场景完全加载。
+*`AssertLabel（<GameObjectName>，<Text>）` - 断言文本值，等待值更改。
+*`WaitFor（<Condition>）` - 等待满足给定条件的通用方法。
+*`WaitFor（new LabelTextAppeared（<GameObjectName>，<Text>））` - 等待带有给定文本的标签
+*`WaitFor（new SceneLoaded（<SceneName>））` - 等到场景完全加载
+*`WaitFor（new ObjectAppeared（<GameObjectName>））` - 等待具有给定名称的对象出现
+*`WaitFor（new ObjectAppeared <ObjectType>（））` - 等待具有给定类型的组件的对象出现
+*`WaitFor（new ObjectDisappeared（<GameObjectName>））` - 等待给定名称的对象消失
+*`WaitFor（new ObjectDisappeared <ObjectType>（））` - 等待给定类型的组件消失的对象
+*`WaitFor（new BoolCondition（<BoolFunction>））` - 当给定的bool表达式变为true时，通用条件被满足
