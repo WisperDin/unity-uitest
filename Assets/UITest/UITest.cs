@@ -358,4 +358,169 @@ public class UITest : MonoBehaviour
             return null;
         }
     }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    //liziyi code
+    //Pointer Down M
+    protected Coroutine PointerDown(string controlName, Dir dir)
+    {
+        return StartCoroutine(PointerDownInternal(controlName, dir));
+    }
+    protected IEnumerator PointerDownInternal(string controlName, Dir dir)
+    {
+        var controlAppeared = new ObjectAppeared(controlName);
+        Debug.Log("waiting1 ...");
+        yield return WaitFor(controlAppeared);
+        yield return PointerDownInternal(controlAppeared.o, dir);
+    }
+    protected IEnumerator PointerDownInternal(GameObject controlObj, Dir dir)
+    {
+        Debug.Log("waiting2 ...");
+        yield return WaitFor(new PointerAccessible(controlObj, dir));
+        Debug.Log("PointerDown: " + controlObj);
+        ExecuteEvents.Execute(controlObj, new PointerEventData(EventSystem.current), ExecuteEvents.pointerDownHandler);
+        yield return null;
+    }
+
+    //Pointer Up M
+    protected Coroutine PointerUp(string controlName, Dir dir)
+    {
+        return StartCoroutine(PointerUpInternal(controlName, dir));
+    }
+    protected IEnumerator PointerUpInternal(string controlName, Dir dir)
+    {
+        var controlAppeared = new ObjectAppeared(controlName);
+        Debug.Log("waiting1 ...");
+        yield return WaitFor(controlAppeared);
+        yield return PointerUpInternal(controlAppeared.o, dir);
+    }
+    protected IEnumerator PointerUpInternal(GameObject controlObj, Dir dir)
+    {
+        Debug.Log("waiting2 ...");
+        yield return WaitFor(new PointerAccessible(controlObj, dir));
+        Debug.Log("PointerUp: " + controlObj);
+        ExecuteEvents.Execute(controlObj, new PointerEventData(EventSystem.current), ExecuteEvents.pointerUpHandler);
+        yield return null;
+    }
+
+    //Pointer Drag 
+    protected Coroutine PointerDrag(string controlName, Dir dir, Vector2 pos)
+    {
+        return StartCoroutine(PointerDragInternal(controlName, dir, pos));
+    }
+    protected IEnumerator PointerDragInternal(string controlName, Dir dir, Vector2 pos)
+    {
+        var controlAppeared = new ObjectAppeared(controlName);
+        Debug.Log("waiting1 ...");
+        yield return WaitFor(controlAppeared);
+        yield return PointerDragInternal(controlAppeared.o, dir, pos);
+    }
+    protected IEnumerator PointerDragInternal(GameObject controlObj, Dir dir, Vector2 pos)
+    {
+        Debug.Log("waiting2 ...");
+        yield return WaitFor(new PointerAccessible(controlObj, dir));
+
+        //构造一个Pointer事件
+        PointerEventData myPE = new PointerEventData(EventSystem.current);
+        myPE.position = pos;
+        Debug.Log("PointerDrag: " + controlObj);
+        Debug.LogFormat("PointerDrag:{0},{1} ", pos.x, pos.y);
+        ExecuteEvents.Execute(controlObj, myPE, ExecuteEvents.dragHandler);
+        yield return null;
+    }
+    public enum Dir
+    {
+        left, right
+    }
+
+    protected class PointerAccessible : Condition
+    {
+
+        GameObject pointer;
+        Dir curDir;
+        /// <summary>
+        /// 构造左边摇杆或者右边摇杆
+        /// </summary>
+        /// <param name="pointer"></param>
+        /// <param name="dir"></param>
+        public PointerAccessible(GameObject pointer, Dir dir)
+        {
+            this.pointer = pointer;
+            curDir = dir;
+        }
+
+        public override bool Satisfied()
+        {
+            return GetAccessibilityMessage() == null;
+        }
+
+        public override string ToString()
+        {
+            return GetAccessibilityMessage() ?? "pointer " + pointer.name + " is accessible";
+        }
+
+        string GetAccessibilityMessage()
+        {
+            if (pointer == null)
+                return "pointer " + pointer + " not found";
+
+            if (curDir == Dir.left)//左摇杆
+            {
+                if (pointer.GetComponent<UnityStandardAssets.CrossPlatformInput.Joystick>() == null)
+                    return "pointer L " + pointer + " does not have a Button component attached";
+            }
+            else//右摇杆
+            {
+                if (pointer.GetComponent<UnityStandardAssets.CrossPlatformInput.RightStickHandler>() == null)
+                    return "pointer R " + pointer + " does not have a Button component attached";
+            }
+
+
+            return null;
+        }
+    }
+    protected class ObjectActive : ObjectAppeared
+    {
+
+        public ObjectActive(string path) : base(path) { }
+
+        public override bool Satisfied()
+        {
+            o = GameObject.Find(path);
+            return o != null && o.activeInHierarchy;
+        }
+
+        public override string ToString()
+        {
+            return "ObjectAppeared(" + path + ")";
+        }
+    }
+    //protected class ObjectDisActive : ObjectActive
+    //{
+    //    public ObjectDisActive(string path) : base(path) { }
+
+    //    public override bool Satisfied()
+    //    {
+    //        return !base.Satisfied();
+    //    }
+
+    //    public override string ToString()
+    //    {
+    //        return "ObjectDisappeared(" + path + ")";
+    //    }
+    //}
+
+
+
+
+
+
+
+
+
+
+    //liziyi code
+    /// ////////////////////////////////////////////////////////////////////////
+
 }
