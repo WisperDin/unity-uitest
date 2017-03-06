@@ -28,10 +28,10 @@
 
 API被设计为可读的自然语言，所以它也可以被非技术人员理解。所有API调用都设计为等待其函数可以在一定的超时时间内执行。
 
-*`Press（<GameObjectName>）` - 模拟按钮按。如果在场景中找不到具有给定名称的对象，它会等待它出现。
-*`LoadScene（<SceneName>）` - 加载新场景并等待直到场景完全加载。
-*`AssertLabel（<GameObjectName>，<Text>）` - 断言文本值，等待值更改。
-*`WaitFor（<Condition>）` - 等待满足给定条件的通用方法。
+*`Press（<GameObjectName>）` - 模拟按钮按。如果在场景中找不到具有给定名称的对象，它会等待它出现.
+*`LoadScene（<SceneName>）` - 加载新场景并等待直到场景完全加载.
+*`AssertLabel（<GameObjectName>，<Text>）` - 断言文本值，等待值更改.
+*`WaitFor（<Condition>）` - 等待满足给定条件的通用方法.
 *`WaitFor（new LabelTextAppeared（<GameObjectName>，<Text>））` - 等待带有给定文本的标签
 *`WaitFor（new SceneLoaded（<SceneName>））` - 等到场景完全加载
 *`WaitFor（new ObjectAppeared（<GameObjectName>））` - 等待具有给定名称的对象出现
